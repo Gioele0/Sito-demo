@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Luma Island Adventures – Jet Ski & Family Buggy Fuerteventura</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* RESET SEMPLICE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: #050816;
+      color: #f5f5f5;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* NAVBAR */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .logo span {
+      color: #00e0ff;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    nav a {
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.2rem;
+      width: 0;
+      height: 1px;
+      background: #00e0ff;
+      transition: width 0.25s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* SEZIONE PARALLAX GENERICA */
+    .parallax {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .parallax-bg,
+    .parallax-layer {
+      position: absolute;
+      inset: -10%;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      will-change: transform;
+      transform: translate3d(0,0,0);
+    }
+
+    .parallax-bg {
+      filter: brightness(0.4) saturate(1.1);
+      z-index: -3;
+    }
+
+    .parallax-layer.wave {
+      background: radial-gradient(circle at 20% 0, rgba(0,224,255,0.35), transparent 60%),
+                  radial-gradient(circle at 80% 100%, rgba(253,184,19,0.25), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.8;
+      z-index: -2;
+    }
+
+    .parallax-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 60%);
+      mix-blend-mode: soft-light;
+      z-index: -1;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      padding: 7rem 1.5rem 3rem;
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #b3e8ff;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 5vw, 4.6rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    h1 span {
+      color: #00e0ff;
+    }
+
+    .hero-subtitle {
+      max-width: 680px;
+      margin: 0 auto 2rem;
+      font-size: 1rem;
+      color: #d8e6ff;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.8rem 1.9rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(3,7,18,0.7);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00e0ff, #00ffa3);
+      color: #050816;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(15,23,42,0.9);
+      border-color: #00e0ff;
+      transform: translateY(-1px);
+    }
+
+    /* SEZIONI CONTENUTO */
+    section {
+      padding: 5rem 1.5rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.9rem;
+      color: #8ca4ff;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-heading {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1.3fr 1fr;
+      }
+
+      .hero-content {
+        padding-top: 8rem;
+      }
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      padding: 0.2rem 0.8rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #e5e7eb;
+      margin-bottom: 0.6rem;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .bullet-list li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.1rem;
+      position: relative;
+      color: #d1d5db;
+      font-size: 0.95rem;
+    }
+
+    .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #00e0ff;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      opacity: 0.9;
+    }
+
+    /* CARD */
+    .card {
+      border-radius: 1.5rem;
+      background: radial-gradient(circle at top left, rgba(148,163,255,0.3), rgba(15,23,42,0.96));
+      border: 1px solid rgba(148,163,184,0.5);
+      padding: 1.5rem;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.6);
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card h4 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.5rem;
+      color: #a5b4fc;
+    }
+
+    .card .price {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #fcd34d;
+    }
+
+    .small {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    /* DOPPIA SEZIONE TOUR */
+    .tours {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 900px) {
+      .tours {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* CONTATTI */
+    .contact-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1.2fr 1fr;
+      }
+    }
+
+    .contact-item {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #9ca3af;
+      margin-bottom: 0.2rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.95);
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #00e0ff;
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.4);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 1.5rem 2rem;
+      border-top: 1px solid rgba(31,41,55,1);
+      color: #9ca3af;
+      font-size: 0.85rem;
+    }
+
+    footer .row {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    /* RESPONSIVE NAV */
+    @media (max-width: 700px) {
+      header {
+        padding-inline: 1rem;
+      }
+
+      nav ul {
+        gap: 1rem;
+        font-size: 0.75rem;
+      }
+
+      .btn {
+        padding-inline: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header>
+    <div class="logo">
+      Luma <span>Island</span> Adventures
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#jet-ski">Jet Ski</a></li>
+        <li><a href="#buggy">Family Buggy</a></li>
+        <li><a href="#routes">Routes</a></li>
+        <li><a href="#contact">Contatti</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO PARALLAX -->
+  <section class="parallax" id="top">
+    <!-- Sostituisci con una tua immagine mare/dune -->
+    <div class="parallax-bg"
+      style="background-image:url('https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+    </div>
+    <div class="parallax-layer wave"></div>
+    <div class="parallax-overlay"></div>
+
+    <div class="hero-content">
+      <p class="eyebrow">Corralejo · Fuerteventura · Isole Canarie</p>
+      <h1>Jet Ski &amp; <span>Family Buggy</span> Tours</h1>
+      <p class="hero-subtitle">
+        Parti da Corralejo verso l’isola di Lobos e le dune in jet ski, oppure
+        esplora i paesaggi vulcanici a bordo dei nostri buggy 4 posti.
+        Piccoli gruppi, massima sicurezza, adrenalina e panorami incredibili.
+      </p>
+      <div class="hero-buttons">
+        <a href="#jet-ski" class="btn btn-primary">Prenota Jet Ski</a>
+        <a href="#buggy" class="btn btn-outline">Prenota Buggy</a>
+        <a href="#routes" class="btn btn-outline">Scopri le rotte</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEZIONE JET SKI -->
+  <section id="jet-ski">
+    <div class="section-inner grid grid-2">
+      <div>
+        <p class="section-title">Jet Ski Corralejo</p>
+        <h2 class="section-heading">Vola sull’acqua fino a Lobos &amp; Dune</h2>
+        <p>
+          I nostri tour in jet ski partono dal porto di Corralejo e ti portano
+          lungo la costa nord di Fuerteventura. Navigherai intorno alla
+          suggestiva isola di Lobos e davanti alle famose dune, con un’uscita
+          pensata per chi ama la velocità ma vuole sentirsi sempre al sicuro.
+          Ogni moto d’acqua può ospitare fino a due persone.
+        </p>
+
+        <div class="pill-row">
+          <span class="pill">Fino a 2 persone / jet ski</span>
+          <span class="pill">Guide esperte</span>
+          <span class="pill">Lobos &amp; Dune</span>
+          <span class="pill">Tutti i giorni 8:00–21:00</span>
+        </div>
+
+        <h3 style="margin-top:2rem; margin-bottom:0.6rem;">Perché scegliere i nostri Jet Ski</h3>
+        <ul class="bullet-list">
+          <li>Briefing di sicurezza prima di ogni partenza.</li>
+          <li>Itinerario panoramico con vista su Corralejo, Lobos e le dune.</li>
+          <li>Foto e video disponibili su richiesta.</li>
+          <li>Ideale per coppie, amici e amanti del mare.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>Tour principali</h4>
+
+        <h3>Tour Jet Ski 40 minuti</h3>
+        <p class="price">da 99€ · 1–2 persone per moto</p>
+        <p class="small">
+          Partenza da Corralejo, passaggio intorno a Lobos e ritorno costeggiando
+          le dune. Perfetto se vuoi un concentrato di adrenalina e panorami.
+        </p>
+
+        <hr style="border-color:rgba(148,163,184,0.4); margin:1.2rem 0;" />
+
+        <h3>Tour Privato VIP</h3>
+        <p class="price">su richiesta</p>
+        <p class="small">
+          Uscita privata con guida dedicata e ritmo di navigazione personalizzato.
+          Ideale per occasioni speciali o gruppi di amici.
+        </p>
+
+        <a href="https://wa.me/34643275110" target="_blank" class="btn btn-primary" style="margin-top:1.4rem; width:100%; justify-content:center;">
+          Prenota ora su WhatsApp
+        </a>
+        <p class="small" style="margin-top:0.6rem;">
+          Orari flessibili tutti i giorni · +34 643 275 110
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEZIONE BUGGY PARALLAX -->
+  <section class="parallax" id="buggy">
+    <!-- Sostituisci con immagine dune/buggy -->
+    <div class="parallax-bg"
+      style="background-image:url('https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1600');">
+    </div>
+    <div class="parallax-layer wave"></div>
+    <div class="parallax-overlay"></div>
+
+    <div class="hero-content">
+      <p class="eyebrow">Family Buggy Fuerteventura</p>
+      <h1>Off-road in famiglia tra vulcani &amp; dune</h1>
+      <p class="hero-subtitle">
+        Buggy CFMOTO ZFORCE 950 SPORT-4, 4 posti e cambio automatico:
+        solo due buggy per tour per un’esperienza davvero personalizzata,
+        con guida e percorsi studiati per il massimo divertimento in sicurezza.
+      </p>
+      <div class="hero-buttons">
+        <a href="#routes" class="btn btn-primary">Vedi le rotte buggy</a>
+        <a href="#contact" class="btn btn-outline">Richiedi disponibilità</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEZIONE BUGGY DETTAGLI -->
+  <section>
+    <div class="section-inner tours">
+      <div>
+        <p class="section-title">Tour in buggy</p>
+        <h2 class="section-heading">Solo 2 buggy per uscita, atmosfera familiare</h2>
+        <p>
+          Con Family Buggy Fuerteventura ti muovi in piccoli gruppi per goderti il
+          paesaggio senza fretta. La nostra guida ti accompagna lungo piste sterrate,
+          zone vulcaniche e punti panoramici spettacolari sulla costa nord.
+        </p>
+
+        <div class="badge">Requisiti</div>
+        <ul class="bullet-list">
+          <li>Patente di guida valida per chi guida il buggy.</li>
+          <li>Et&agrave; minima passeggeri: 3 anni.</li>
+          <li>Massimo 4 persone per buggy.</li>
+          <li>Caschi e briefing di sicurezza inclusi.</li>
+        </ul>
+
+        <h3 style="margin-top:2rem; margin-bottom:0.6rem;">I nostri buggy CFMOTO ZFORCE 950 SPORT-4</h3>
+        <ul class="bullet-list">
+          <li>Motore bicilindrico a V con coppia potente e risposta immediata.</li>
+          <li>Sospensioni a doppi bracci oscillanti con ammortizzatori regolabili.</li>
+          <li>Altezza da terra generosa e gomme off-road da 27”.</li>
+          <li>Abitacolo confortevole con sedili regolabili e sterzo servocomandato.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>Tour principali</h4>
+
+        <h3>Esperienza 2 ore</h3>
+        <p class="price">da 140€ per buggy</p>
+        <p class="small">
+          Percorso misto tra sterrato e panorami vulcanici, con soste foto e
+          viewpoint sul nord di Fuerteventura.
+        </p>
+
+        <hr style="border-color:rgba(148,163,184,0.4); margin:1.2rem 0;" />
+
+        <h3>Tour Privato VIP</h3>
+        <p class="price">su richiesta</p>
+        <p class="small">
+          Itinerario personalizzato, orario flessibile e guida dedicata. Ideale
+          per famiglie o piccoli gruppi che cercano un’esperienza esclusiva.
+        </p>
+
+        <a href="https://wa.me/34643187599" target="_blank" class="btn btn-primary" style="margin-top:1.4rem; width:100%; justify-content:center;">
+          Prenota buggy su WhatsApp
+        </a>
+        <p class="small" style="margin-top:0.6rem;">
+          Info rapide anche su +34 643 187 599
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEZIONE ROUTES -->
+  <section id="routes">
+    <div class="section-inner">
+      <p class="section-title">Le nostre rotte</p>
+      <h2 class="section-heading">Pianifica la tua giornata perfetta</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h4>Jet Ski Routes</h4>
+          <h3>Costa nord &amp; Isola di Lobos</h3>
+          <ul class="bullet-list" style="margin-top:0.8rem;">
+            <li>Partenza dal porto di Corralejo.</li>
+            <li>Passaggio intorno a Lobos con vista sulla laguna.</li>
+            <li>Tratto davanti alle dune di Corralejo.</li>
+            <li>Soste per foto e cambio pilota (se desiderato).</li>
+          </ul>
+          <p class="small" style="margin-top:1rem;">
+            Disponibile tutti i giorni con diversi orari durante la giornata.
+            Chiedici la fascia oraria che preferisci.
+          </p>
+        </div>
+
+        <div class="card">
+          <h4>Buggy Routes</h4>
+          <h3>Vulcani, piste sterrate &amp; punti panoramici</h3>
+          <ul class="bullet-list" style="margin-top:0.8rem;">
+            <li>Zona vulcanica nell’entroterra di Corralejo.</li>
+            <li>Tratti off-road con tratti tecnici ma sicuri.</li>
+            <li>Stop panoramici per foto e spiegazioni della guida.</li>
+            <li>Breve sosta per drink/pausa (opzionale).</li>
+          </ul>
+          <p class="small" style="margin-top:1rem;">
+            Numero limitato di buggy per garantire pi&ugrave; spazio e attenzione
+            ad ogni famiglia.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEZIONE CONTATTI -->
+  <section id="contact">
+    <div class="section-inner contact-grid">
+      <div>
+        <p class="section-title">Prenotazioni &amp; informazioni</p>
+        <h2 class="section-heading">Contattaci per il tuo prossimo tour</h2>
+        <p>
+          Preferisci scriverci prima di prenotare? Raccontaci quando arrivi a
+          Fuerteventura, quante persone siete e quale attività ti interessa
+          (jet ski, buggy o entrambe). Ti risponderemo con disponibilità
+          aggiornata e prezzi precisi.
+        </p>
+
+        <div style="margin-top:2rem;">
+          <div class="contact-item">
+            <div class="contact-label">Telefono / WhatsApp</div>
+            <div>+34 643 275 110 · Jet Ski</div>
+            <div>+34 643 187 599 · Family Buggy</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Email</div>
+            <div>info@lumaislandadventures.com</div>
+            <!-- Sostituisci con la tua email reale -->
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Orari</div>
+            <div>Lunedì – Domenica · 8:00 – 21:00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Scrivici direttamente</h4>
+        <form>
+          <div style="margin-bottom:0.9rem;">
+            <label class="contact-label" for="name">Nome</label>
+            <input id="name" type="text" placeholder="Il tuo nome" />
+          </div>
+          <div style="margin-bottom:0.9rem;">
+            <label class="contact-label" for="email">Email</label>
+            <input id="email" type="email" placeholder="tuo@email.com" />
+          </div>
+          <div style="margin-bottom:0.9rem;">
+            <label class="contact-label" for="phone">Telefono</label>
+            <input id="phone" type="tel" placeholder="+34 ..." />
+          </div>
+          <div style="margin-bottom:1.1rem;">
+            <label class="contact-label" for="message">Messaggio</label>
+            <textarea id="message"
+              placeholder="Data, numero di persone, Jet Ski / Buggy, eventuali richieste speciali"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+            Invia richiesta
+          </button>
+          <p class="small" style="margin-top:0.8rem;">
+            Il form &egrave; solo grafico in questo esempio: collega l’invio al tuo
+            sistema di email o booking preferito.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="row">
+      <div>
+        © <span id="year"></span> Luma Island Adventures · Corralejo, Fuerteventura
+      </div>
+      <div>
+        Privacy · Cookie · Instagram
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Aggiorna anno footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Effetto parallax semplice su background & layer
+    const parallaxSections = document.querySelectorAll(".parallax");
+
+    window.addEventListener("scroll", () => {
+      const scrollY = window.pageYOffset;
+
+      parallaxSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const offset = rect.top + scrollY;
+
+        const bg = section.querySelector(".parallax-bg");
+        const layer = section.querySelector(".parallax-layer.wave");
+
+        const relativeY = (scrollY - offset) * 0.3;  // sfondo lento
+        const waveY = (scrollY - offset) * 0.6;      // layer veloce
+
+        if (bg) {
+          bg.style.transform = `translate3d(0, ${relativeY}px, 0) scale(1.05)`;
+        }
+        if (layer) {
+          layer.style.transform = `translate3d(0, ${waveY}px, 0) scale(1.1)`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
