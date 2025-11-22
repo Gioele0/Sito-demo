@@ -5,7 +5,7 @@
   <title>Luma Island Adventures – Jet Ski & Family Buggy Fuerteventura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* RESET SEMPLICE */
+    /* RESET */
     * {
       margin: 0;
       padding: 0;
@@ -80,7 +80,7 @@
       width: 100%;
     }
 
-    /* SEZIONE PARALLAX GENERICA */
+    /* SEZIONI PARALLAX */
     .parallax {
       position: relative;
       min-height: 100vh;
@@ -104,13 +104,14 @@
     }
 
     .parallax-bg {
-      filter: brightness(0.4) saturate(1.1);
+      filter: brightness(0.32) saturate(1.1);
       z-index: -3;
     }
 
     .parallax-layer.wave {
-      background: radial-gradient(circle at 20% 0, rgba(0,224,255,0.35), transparent 60%),
-                  radial-gradient(circle at 80% 100%, rgba(253,184,19,0.25), transparent 60%);
+      background:
+        radial-gradient(circle at 20% 0, rgba(0,224,255,0.35), transparent 60%),
+        radial-gradient(circle at 80% 100%, rgba(253,184,19,0.25), transparent 60%);
       mix-blend-mode: screen;
       opacity: 0.8;
       z-index: -2;
@@ -127,6 +128,8 @@
     .hero-content {
       max-width: 900px;
       padding: 7rem 1.5rem 3rem;
+      position: relative;
+      z-index: 10;
     }
 
     .eyebrow {
@@ -193,6 +196,42 @@
       background: rgba(15,23,42,0.9);
       border-color: #00e0ff;
       transform: translateY(-1px);
+    }
+
+    /* SAGOMA 3D IN PRIMO PIANO */
+    .parallax-foreground {
+      position: absolute;
+      bottom: 4vh;
+      right: 5vw;
+      width: min(26rem, 55vw);
+      max-width: 100%;
+      pointer-events: none;
+      transform-style: preserve-3d;
+      will-change: transform;
+      filter:
+        drop-shadow(0 25px 40px rgba(0, 0, 0, 0.65))
+        drop-shadow(0 0 18px rgba(0, 224, 255, 0.6));
+      --tx: 0px;
+      --ty: 0px;
+      --tz: 80px;
+      --rx: 0deg;
+      --ry: 0deg;
+      transform:
+        translate3d(var(--tx), var(--ty), var(--tz))
+        rotateX(var(--rx))
+        rotateY(var(--ry));
+      z-index: 9;
+    }
+
+    .parallax-foreground--jetski {
+      bottom: 6vh;
+      right: 5vw;
+    }
+
+    .parallax-foreground--buggy {
+      bottom: 8vh;
+      left: 7vw;
+      right: auto;
     }
 
     /* SEZIONI CONTENUTO */
@@ -316,7 +355,7 @@
       color: #9ca3af;
     }
 
-    /* DOPPIA SEZIONE TOUR */
+    /* TOUR GRIGLIA */
     .tours {
       display: grid;
       gap: 2rem;
@@ -405,6 +444,10 @@
       .btn {
         padding-inline: 1.3rem;
       }
+
+      .parallax-foreground {
+        width: min(20rem, 70vw);
+      }
     }
   </style>
 </head>
@@ -424,9 +467,8 @@
     </nav>
   </header>
 
-  <!-- HERO PARALLAX -->
+  <!-- HERO PARALLAX JET SKI -->
   <section class="parallax" id="top">
-    <!-- Sostituisci con una tua immagine mare/dune -->
     <div class="parallax-bg"
       style="background-image:url('https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1600');">
     </div>
@@ -447,6 +489,13 @@
         <a href="#routes" class="btn btn-outline">Scopri le rotte</a>
       </div>
     </div>
+
+    <!-- SAGOMA 3D JET SKI: sostituisci il src con il tuo PNG -->
+    <img
+      src="images/jetski-3d.png"
+      alt="Jet ski tour Corralejo"
+      class="parallax-foreground parallax-foreground--jetski"
+    />
   </section>
 
   <!-- SEZIONE JET SKI -->
@@ -508,9 +557,8 @@
     </div>
   </section>
 
-  <!-- SEZIONE BUGGY PARALLAX -->
+  <!-- SEZIONE PARALLAX BUGGY -->
   <section class="parallax" id="buggy">
-    <!-- Sostituisci con immagine dune/buggy -->
     <div class="parallax-bg"
       style="background-image:url('https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1600');">
     </div>
@@ -530,6 +578,13 @@
         <a href="#contact" class="btn btn-outline">Richiedi disponibilità</a>
       </div>
     </div>
+
+    <!-- SAGOMA 3D BUGGY: sostituisci il src con il tuo PNG -->
+    <img
+      src="images/buggy-3d.png"
+      alt="Family buggy tour Fuerteventura"
+      class="parallax-foreground parallax-foreground--buggy"
+    />
   </section>
 
   <!-- SEZIONE BUGGY DETTAGLI -->
@@ -652,7 +707,6 @@
           <div class="contact-item">
             <div class="contact-label">Email</div>
             <div>info@lumaislandadventures.com</div>
-            <!-- Sostituisci con la tua email reale -->
           </div>
           <div class="contact-item">
             <div class="contact-label">Orari</div>
@@ -685,7 +739,7 @@
             Invia richiesta
           </button>
           <p class="small" style="margin-top:0.8rem;">
-            Il form &egrave; solo grafico in questo esempio: collega l’invio al tuo
+            Il form è solo grafico in questo esempio: collega l’invio al tuo
             sistema di email o booking preferito.
           </p>
         </form>
@@ -709,9 +763,9 @@
     // Aggiorna anno footer
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Effetto parallax semplice su background & layer
     const parallaxSections = document.querySelectorAll(".parallax");
 
+    // Effetto scroll parallax (sfondo, layer, foreground Y)
     window.addEventListener("scroll", () => {
       const scrollY = window.pageYOffset;
 
@@ -721,18 +775,55 @@
 
         const bg = section.querySelector(".parallax-bg");
         const layer = section.querySelector(".parallax-layer.wave");
+        const fg = section.querySelector(".parallax-foreground");
 
-        const relativeY = (scrollY - offset) * 0.3;  // sfondo lento
-        const waveY = (scrollY - offset) * 0.6;      // layer veloce
+        const base = scrollY - offset;
 
         if (bg) {
-          bg.style.transform = `translate3d(0, ${relativeY}px, 0) scale(1.05)`;
+          const bgY = base * 0.25;
+          bg.style.transform = `translate3d(0, ${bgY}px, 0) scale(1.08)`;
         }
+
         if (layer) {
-          layer.style.transform = `translate3d(0, ${waveY}px, 0) scale(1.1)`;
+          const waveY = base * 0.55;
+          layer.style.transform = `translate3d(0, ${waveY}px, 0) scale(1.12)`;
+        }
+
+        if (fg) {
+          const fgY = base * 0.15;
+          fg.style.setProperty("--ty", fgY + "px");
+          fg.style.setProperty("--tz", "80px");
         }
       });
     });
+
+    // Effetto 3D con il movimento del mouse SOLO nella hero #top
+    const hero = document.querySelector("#top");
+    const heroForeground = hero ? hero.querySelector(".parallax-foreground") : null;
+
+    if (hero && heroForeground) {
+      hero.addEventListener("mousemove", (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 -> 0.5
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+        const maxTiltY = 12; // gradi
+        const maxTiltX = 7;
+        const moveX = x * 30; // px
+        const moveY = y * 12;
+
+        heroForeground.style.setProperty("--tx", moveX + "px");
+        heroForeground.style.setProperty("--rx", -y * maxTiltX + "deg");
+        heroForeground.style.setProperty("--ry", x * maxTiltY + "deg");
+        heroForeground.style.setProperty("--ty", moveY + "px");
+      });
+
+      hero.addEventListener("mouseleave", () => {
+        heroForeground.style.setProperty("--tx", "0px");
+        heroForeground.style.setProperty("--rx", "0deg");
+        heroForeground.style.setProperty("--ry", "0deg");
+      });
+    }
   </script>
 </body>
 </html>
