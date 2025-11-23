@@ -80,17 +80,22 @@
       width: 100%;
     }
 
-    /* SEZIONI PARALLAX BASE */
-    .parallax {
+    /* SCROLL SCENE HERO (tipo Slider Revolution) */
+    .scroll-scene {
       position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      /* altezza > 100vh per avere spazio di scroll */
+      height: 220vh;
+    }
+
+    .scene-viewport {
+      position: sticky;
+      top: 0;
+      height: 100vh;
       overflow: hidden;
       isolation: isolate;
     }
 
+    /* ELEMENTI PARALLAX BASE */
     .parallax-bg,
     .parallax-layer {
       position: absolute;
@@ -147,6 +152,7 @@
 
     .hero-col {
       min-width: 0;
+      will-change: transform, opacity;
     }
 
     .hero-left {
@@ -158,10 +164,26 @@
     }
 
     @media (max-width: 960px) {
+      .scroll-scene {
+        height: auto;
+      }
+
+      .scene-viewport {
+        position: relative;
+        height: auto;
+      }
+
+      .parallax-bg,
+      .parallax-layer {
+        position: absolute;
+      }
+
       .hero-inner {
         grid-template-columns: minmax(0,1fr);
         text-align: center;
         row-gap: 2.5rem;
+        padding-top: 6rem;
+        padding-bottom: 4rem;
       }
       .hero-left,
       .hero-right {
@@ -263,13 +285,14 @@
       color: #00e0ff;
     }
 
-    /* JETSKI CENTRALE 3D */
+    /* JETSKI CENTRALE 3D/SCROLL */
     .hero-visual-wrapper {
       position: relative;
       width: min(480px, 80vw);
       aspect-ratio: 1 / 1;
       margin-inline: auto;
       pointer-events: none;
+      will-change: transform;
     }
 
     .hero-visual-glow {
@@ -291,18 +314,14 @@
       width: 85%;
       max-width: 420px;
       transform-style: preserve-3d;
-      --rx: 0deg;
-      --ry: 0deg;
-      --mx: 0px;
-      --my: 0px;
       transform:
-        translate3d(var(--mx), var(--my), 140px)
-        rotateX(var(--rx))
-        rotateY(var(--ry));
+        translate3d(0,60px,140px)
+        scale(1);
       filter:
         drop-shadow(0 32px 50px rgba(0,0,0,0.9))
         drop-shadow(0 0 40px rgba(56,189,248,0.9));
-      transition: transform 0.08s ease-out;
+      will-change: transform;
+      transition: transform 0.1s ease-out;
     }
 
     @media (max-width: 960px) {
@@ -315,8 +334,9 @@
     }
 
     /* SEZIONI CONTENUTO */
-    section {
+    section.content-section {
       padding: 5rem 1.5rem;
+      background: #020617;
     }
 
     .section-inner {
@@ -495,6 +515,7 @@
       border-top: 1px solid rgba(31,41,55,1);
       color: #9ca3af;
       font-size: 0.85rem;
+      background: #020617;
     }
 
     footer .row {
@@ -539,60 +560,62 @@
     </nav>
   </header>
 
-  <!-- HERO: SFONDO INTERO + JETSKI CENTRALE -->
-  <section class="parallax parallax-hero" id="top">
-    <div class="parallax-bg"></div>
-    <div class="parallax-layer wave"></div>
-    <div class="parallax-overlay"></div>
+  <!-- HERO: SCENA FISSA CON PARALLAX SU SCROLL -->
+  <section class="scroll-scene" id="top">
+    <div class="scene-viewport parallax parallax-hero">
+      <div class="parallax-bg"></div>
+      <div class="parallax-layer wave"></div>
+      <div class="parallax-overlay"></div>
 
-    <div class="hero-inner">
-      <!-- SINISTRA -->
-      <div class="hero-col hero-left">
-        <p class="eyebrow">Corralejo · Fuerteventura · Isole Canarie</p>
-        <h1>Jet Ski &amp;<br><span>Family Buggy</span> Tours</h1>
-        <p class="hero-subtitle">
-          Parti da Corralejo verso l’isola di Lobos e le dune in jet ski, oppure
-          esplora i paesaggi vulcanici a bordo dei nostri buggy 4 posti.
-          Piccoli gruppi, massima sicurezza, adrenalina e panorami incredibili.
-        </p>
-        <div class="hero-buttons">
-          <a href="#jet-ski" class="btn btn-primary">Prenota Jet Ski</a>
-          <a href="#buggy" class="btn btn-outline">Prenota Buggy</a>
+      <div class="hero-inner">
+        <!-- SINISTRA -->
+        <div class="hero-col hero-left" id="hero-left">
+          <p class="eyebrow">Corralejo · Fuerteventura · Isole Canarie</p>
+          <h1>Jet Ski &amp;<br><span>Family Buggy</span> Tours</h1>
+          <p class="hero-subtitle">
+            Parti da Corralejo verso l’isola di Lobos e le dune in jet ski, oppure
+            esplora i paesaggi vulcanici a bordo dei nostri buggy 4 posti.
+            Piccoli gruppi, massima sicurezza, adrenalina e panorami incredibili.
+          </p>
+          <div class="hero-buttons">
+            <a href="#jet-ski" class="btn btn-primary">Prenota Jet Ski</a>
+            <a href="#buggy" class="btn btn-outline">Prenota Buggy</a>
+          </div>
         </div>
-      </div>
 
-      <!-- CENTRO: SAGOMA JETSKI -->
-      <div class="hero-col">
-        <div class="hero-visual-wrapper">
-          <div class="hero-visual-glow"></div>
-          <img
-            src="img/Sagoma%20per%20Jetski.png"
-            alt="Jet ski tour Corralejo"
-            class="hero-jetski"
-            id="hero-jetski"
-          />
+        <!-- CENTRO: SAGOMA JETSKI -->
+        <div class="hero-col">
+          <div class="hero-visual-wrapper" id="hero-visual">
+            <div class="hero-visual-glow"></div>
+            <img
+              src="img/Sagoma%20per%20Jetski.png"
+              alt="Jet ski tour Corralejo"
+              class="hero-jetski"
+              id="hero-jetski"
+            />
+          </div>
         </div>
-      </div>
 
-      <!-- DESTRA -->
-      <div class="hero-col hero-right">
-        <p class="section-title" style="margin-bottom:0.8rem;">Perché sceglierci</p>
-        <ul class="hero-points">
-          <li>Tour in piccoli gruppi, atmosfera familiare.</li>
-          <li>Jet ski fino a 2 persone e buggy 4 posti.</li>
-          <li>Rotte verso Lobos, dune e paesaggi vulcanici.</li>
-          <li>Guide esperte, briefing di sicurezza sempre incluso.</li>
-        </ul>
-        <div class="hero-buttons" style="margin-top:1.8rem;">
-          <a href="#routes" class="btn btn-outline">Scopri le rotte</a>
-          <a href="#contact" class="btn btn-outline">Contattaci</a>
+        <!-- DESTRA -->
+        <div class="hero-col hero-right" id="hero-right">
+          <p class="section-title" style="margin-bottom:0.8rem;">Perché sceglierci</p>
+          <ul class="hero-points">
+            <li>Tour in piccoli gruppi, atmosfera familiare.</li>
+            <li>Jet ski fino a 2 persone e buggy 4 posti.</li>
+            <li>Rotte verso Lobos, dune e paesaggi vulcanici.</li>
+            <li>Guide esperte, briefing di sicurezza sempre incluso.</li>
+          </ul>
+          <div class="hero-buttons" style="margin-top:1.8rem;">
+            <a href="#routes" class="btn btn-outline">Scopri le rotte</a>
+            <a href="#contact" class="btn btn-outline">Contattaci</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- SEZIONE JET SKI -->
-  <section id="jet-ski">
+  <section class="content-section" id="jet-ski">
     <div class="section-inner grid grid-2">
       <div>
         <p class="section-title">Jet Ski Corralejo</p>
@@ -651,7 +674,7 @@
   </section>
 
   <!-- SEZIONE PARALLAX BUGGY -->
-  <section class="parallax" id="buggy">
+  <section class="parallax" id="buggy" style="min-height:100vh;">
     <div class="parallax-bg"
       style="background-image:url('img/Sfondo%20per%20buggy.png'); filter:brightness(0.45);">
     </div>
@@ -695,7 +718,7 @@
   </section>
 
   <!-- SEZIONE BUGGY DETTAGLI -->
-  <section>
+  <section class="content-section">
     <div class="section-inner tours">
       <div>
         <p class="section-title">Tour in buggy</p>
@@ -753,7 +776,7 @@
   </section>
 
   <!-- SEZIONE ROUTES -->
-  <section id="routes">
+  <section class="content-section" id="routes">
     <div class="section-inner">
       <p class="section-title">Le nostre rotte</p>
       <h2 class="section-heading">Pianifica la tua giornata perfetta</h2>
@@ -793,7 +816,7 @@
   </section>
 
   <!-- SEZIONE CONTATTI -->
-  <section id="contact">
+  <section class="content-section" id="contact">
     <div class="section-inner contact-grid">
       <div>
         <p class="section-title">Prenotazioni &amp; informazioni</p>
@@ -870,55 +893,78 @@
     // Aggiorna anno footer
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Parallax sullo scroll per le sezioni con sfondo
-    const parallaxSections = document.querySelectorAll(".parallax");
+    // HERO SCROLL PARALLAX tipo Slider Revolution
+    const scene = document.querySelector(".scroll-scene");
+    const heroBg = document.querySelector(".parallax-hero .parallax-bg");
+    const heroWave = document.querySelector(".parallax-hero .parallax-layer.wave");
+    const heroJetski = document.getElementById("hero-jetski");
+    const heroLeft = document.getElementById("hero-left");
+    const heroRight = document.getElementById("hero-right");
+    const heroVisual = document.getElementById("hero-visual");
 
-    window.addEventListener("scroll", () => {
-      const scrollY = window.pageYOffset;
-
-      parallaxSections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const offset = rect.top + scrollY;
-
-        const bg = section.querySelector(".parallax-bg");
-        const layer = section.querySelector(".parallax-layer.wave");
-        const base = scrollY - offset;
-
-        if (bg) {
-          const bgY = base * 0.25;
-          bg.style.transform = `translate3d(0, ${bgY}px, 0)`;
-        }
-
-        if (layer) {
-          const waveY = base * 0.55;
-          layer.style.transform = `translate3d(0, ${waveY}px, 0)`;
-        }
-      });
-    });
-
-    // Effetto 3D con il mouse sulla hero (jetski centrale)
-    const hero = document.querySelector(".parallax-hero");
-    const jetski = document.getElementById("hero-jetski");
-
-    if (hero && jetski) {
-      hero.addEventListener("mousemove", (e) => {
-        const rect = hero.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-        const moveX = x * 40;
-        const moveY = y * 24;
-        const tiltX = -y * 12;
-        const tiltY = x * 20;
-
-        jetski.style.transform =
-          `translate3d(${moveX}px, ${moveY}px, 140px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-      });
-
-      hero.addEventListener("mouseleave", () => {
-        jetski.style.transform = "translate3d(0,0,140px) rotateX(0deg) rotateY(0deg)";
-      });
+    function clamp(v, min, max) {
+      return v < min ? min : v > max ? max : v;
     }
+
+    function onScroll() {
+      if (!scene) return;
+
+      const viewportH = window.innerHeight;
+      const sceneTop = scene.offsetTop;
+      const sceneHeight = scene.offsetHeight;
+      const scrollY = window.scrollY || window.pageYOffset;
+      const end = sceneTop + sceneHeight - viewportH;
+
+      let t = (scrollY - sceneTop) / (end - sceneTop);
+      t = clamp(t, 0, 1); // 0 all'inizio, 1 alla fine
+
+      // sfondo leggero zoom + shift
+      if (heroBg) {
+        const scale = 1.05 + 0.12 * t;
+        const y = -40 * t;
+        heroBg.style.transform = `scale(${scale}) translate3d(0, ${y}px, 0)`;
+      }
+
+      if (heroWave) {
+        const y = 60 * t;
+        heroWave.style.transform = `translate3d(0, ${y}px, 0)`;
+      }
+
+      // jetski: sale e si avvicina un po'
+      if (heroJetski) {
+        const y = 60 - 140 * t;       // da +60px a -80px
+        const scale = 1 + 0.12 * t;   // zoom leggero
+        heroJetski.style.transform =
+          `translate3d(0, ${y}px, 140px) scale(${scale})`;
+      }
+
+      // visual glow: parallax leggero
+      if (heroVisual) {
+        const vy = 20 * (1 - t);
+        heroVisual.style.transform = `translate3d(0, ${vy}px, 0)`;
+      }
+
+      // testo sinistro: leggero parallax + fade out
+      if (heroLeft) {
+        const leftY = 20 * t;
+        const leftOpacity = 1 - 0.4 * t;
+        heroLeft.style.transform = `translate3d(0, ${leftY}px, 0)`;
+        heroLeft.style.opacity = leftOpacity;
+      }
+
+      // testo destro: entra in scena con delay
+      if (heroRight) {
+        const inT = clamp((t - 0.2) / 0.6, 0, 1); // inizio dopo un po'
+        const rightY = 40 * (1 - inT);
+        const rightOpacity = 0.2 + 0.8 * inT;
+        heroRight.style.transform = `translate3d(0, ${rightY}px, 0)`;
+        heroRight.style.opacity = rightOpacity;
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("load", onScroll);
+    window.addEventListener("resize", onScroll);
   </script>
 </body>
 </html>
